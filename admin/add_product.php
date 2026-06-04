@@ -12,24 +12,61 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name     = sanitize($_POST['name'] ?? '');
-    $desc     = sanitize($_POST['description'] ?? '');
-    $price    = floatval($_POST['price'] ?? 0);
-    $stock    = intval($_POST['stock'] ?? 0);
-    $cat_id   = intval($_POST['category_id'] ?? 0);
-    $image    = sanitize($_POST['image'] ?? '');
+
+    $name   = sanitize($_POST['name'] ?? '');
+    $desc   = sanitize($_POST['description'] ?? '');
+    $price  = floatval($_POST['price'] ?? 0);
+    $stock  = intval($_POST['stock'] ?? 0);
+    $cat_id = intval($_POST['category_id'] ?? 0);
+
+    $image = '';
+
+    // Upload image
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+
+        $uploadDir = '../images/';
+
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $fileName = time() . '_' . basename($_FILES['image']['name']);
+        $targetFile = $uploadDir . $fileName;
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        $extension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        if (in_array($extension, $allowedExtensions)) {
+
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                $image = $fileName;
+            } else {
+                $error = 'Failed to upload image.';
+            }
+
+        } else {
+            $error = 'Only JPG, JPEG, PNG, GIF and WEBP files are allowed.';
+        }
+    }
 
     if (empty($name) || $price <= 0 || $cat_id <= 0) {
+
         $error = 'Please fill in all required fields correctly.';
-    } else {
+
+    } elseif (empty($error)) {
+
         $insert = mysqli_query($conn, "
-            INSERT INTO products (category_id, name, description, price, stock, image)
-            VALUES ($cat_id, '$name', '$desc', $price, $stock, '$image')
+            INSERT INTO products
+            (category_id, name, description, price, stock, image)
+            VALUES
+            ($cat_id, '$name', '$desc', $price, $stock, '$image')
         ");
+
         if ($insert) {
             $success = "Product \"$name\" added successfully!";
         } else {
-            $error = 'Failed to add product. Try again.';
+            $error = mysqli_error($conn);
         }
     }
 }
@@ -66,7 +103,7 @@ $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY name");
         <?php if ($success): ?><div class="alert alert-success">✅ <?= $success ?> <a href="products.php">View Products</a></div><?php endif; ?>
 
         <div style="background:var(--white);border-radius:var(--radius);padding:32px;max-width:700px;box-shadow:var(--shadow);">
-            <form method="POST" action="add_product.php">
+            <form method="POST" action="add_product.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Product Name <span style="color:var(--danger)">*</span></label>
                     <input type="text" name="name" placeholder="e.g. Samsung Galaxy A54" required value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
@@ -97,10 +134,18 @@ $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY name");
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Image Filename (optional)</label>
-                    <input type="text" name="image" placeholder="e.g. product.jpg (upload to /images/ folder)" value="<?= htmlspecialchars($_POST['image'] ?? '') ?>">
-                    <small style="color:var(--text-muted);font-size:0.78rem;">Place image files in the /images/ directory in your project folder.</small>
-                </div>
+    <label>Product Image</label>
+
+    <input
+        type="file"
+        name="image"
+        accept=".jpg,.jpeg,.png,.gif,.webp,image/*"
+    >
+
+    <small style="color:var(--text-muted);font-size:0.78rem;">
+        Upload a JPG, JPEG, PNG, GIF or WEBP image.
+    </small>
+</div>
                 <div style="display:flex;gap:12px;">
                     <button type="submit" class="btn-submit" style="width:auto;padding:14px 32px;">Add Product</button>
                     <a href="products.php" style="padding:14px 24px;border-radius:10px;background:var(--bg);color:var(--text);font-weight:600;display:inline-flex;align-items:center;">Cancel</a>
