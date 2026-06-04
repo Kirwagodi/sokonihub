@@ -42,7 +42,7 @@ include 'includes/header.php';
     <div class="form-card">
         <div style="text-align:center;margin-bottom:28px;">
             <div style="font-size:2.5rem;margin-bottom:8px;"></div>
-            <h2>Welcome Back Kirwa</h2>
+            <h2>Welcome Back</h2>
             <p class="subtitle">Login to your Sokoni Hub account</p>
         </div>
 
