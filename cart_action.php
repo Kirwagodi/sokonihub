@@ -22,7 +22,7 @@ switch ($action) {
         $pid = (int)($_POST['product_id'] ?? 0);
         $qty = max(1, (int)($_POST['qty'] ?? 1));
 
-        // Check product exists and has stock
+        
         $prod = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM products WHERE id=$pid AND stock>0"));
         if (!$prod) {
             echo json_encode(['success' => false, 'message' => 'Product not available']);

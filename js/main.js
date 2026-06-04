@@ -1,11 +1,6 @@
-// =============================================
-// Sokoni Hub – Main JavaScript
-// BIT3208 Capstone Project
-// =============================================
-
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ── Auto-dismiss alerts ──────────────────
+
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
@@ -16,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     });
 
-    // ── Add to Cart AJAX ─────────────────────
+    
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -65,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ── Quantity Control ─────────────────────
+    
     document.querySelectorAll('.qty-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const action = this.dataset.action;
@@ -83,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ── Remove from Cart ─────────────────────
+   
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             if (!confirm('Remove this item from cart?')) return;
@@ -101,8 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ── Image Placeholders ───────────────────
-    // Emoji icons for product categories
+   
     const categoryEmojis = {
         'Electronics': '📱',
         'Fashion': '👗',
@@ -112,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'default': '🛍️'
     };
 
-    // ── Product search debounce ──────────────
+    
     const searchInput = document.querySelector('.search-bar input');
     if (searchInput) {
         let timeout;
@@ -124,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ── Smooth scroll to sections ────────────
+    
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function(e) {
             const target = document.querySelector(this.getAttribute('href'));
@@ -135,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ── Active Category Nav ──────────────────
+   
     const urlParams = new URLSearchParams(window.location.search);
     const activeCat = urlParams.get('cat');
     if (activeCat) {
@@ -149,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// ── Helper: Show Toast Notification ─────────
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.style.cssText = `

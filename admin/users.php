@@ -1,7 +1,4 @@
 <?php
-// =============================================
-// Sokoni Hub – Admin: Manage Users
-// =============================================
 
 require_once '../includes/db.php';
 require_once '../includes/functions.php';

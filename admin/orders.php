@@ -1,14 +1,10 @@
 <?php
-// =============================================
-// Sokoni Hub – Admin: Manage Orders
-// =============================================
 
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
 
 requireAdmin();
 
-// Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     $oid    = (int)$_POST['order_id'];
     $status = sanitize($_POST['status']);
