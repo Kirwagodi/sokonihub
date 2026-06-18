@@ -73,7 +73,7 @@ include 'includes/header.php';
 
     <?php else: ?>
     <div class="empty-state">
-        <div class="empty-icon">😕</div>
+        <div class="empty-icon"></div>
         <h3>No results found</h3>
         <p>We couldn't find anything matching "<?= htmlspecialchars($q) ?>". Try different keywords.</p>
         <a href="index.php" class="btn-primary" style="display:inline-block;margin-top:20px;">Browse All Products</a>

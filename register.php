@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password  = $_POST['password'] ?? '';
     $confirm   = $_POST['confirm_password'] ?? '';
 
-    // Validation
+   
     if (empty($username) || empty($email) || empty($password)) {
         $error = 'Please fill in all required fields.';
     } elseif (strlen($username) < 3) {
@@ -107,7 +107,7 @@ include 'includes/header.php';
                 By registering, you agree to our Terms of Service and Privacy Policy.
             </div>
 
-            <button type="submit" class="btn-submit">Create My Account 🚀</button>
+            <button type="submit" class="btn-submit">Create My Account</button>
         </form>
 
         <p class="form-footer">Already have an account? <a href="login.php">Login here</a></p>

@@ -1,12 +1,5 @@
--- =============================================
--- Sokoni Hub - Smart E-Commerce Database
--- BIT3208 Capstone Project
--- =============================================
-
 CREATE DATABASE IF NOT EXISTS sokonihub;
 USE sokonihub;
-
--- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -73,9 +66,6 @@ CREATE TABLE IF NOT EXISTS cart (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
--- =============================================
--- Seed Data
--- =============================================
 
 -- Admin User (password: admin123)
 INSERT INTO users (username, email, password, full_name, role) VALUES
